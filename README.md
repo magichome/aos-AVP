@@ -29,7 +29,8 @@ For the full list, please look at this manifest https://github.com/nova-video-pl
 #### Building
 
 Get the repo tool (https://source.android.com/source/downloading), then type:
-```
+
+```bash
 mkdir aos; cd aos
 repo init -u https://github.com/magichome/aos-AVP -b nova -m mplm.xml
 repo sync -j4
@@ -38,19 +39,22 @@ make
 ```
 
 Alternatively for those not under Linux with a properly installed Android SDK/NDK, you can launch the video player build through:
-```
+
+```bash
 cd Video
 ./gradlew assembleNoamazonRelease
 ```
 
 Note that build is performed on local git clone of ffmpeg and dav1d repos and in order to trigger full update rebuild, you need in case of version upstep to manually do:
-```
+
+```bash
 cd native/dav1d-android-builder; git clean -fdx; cd ..
 cd native/ffmpeg-android-builder; git clean -fdx; cd ..
 ```
 
 Note that the following packages are required to build:
-```
+
+```bash
 sudo curl https://storage.googleapis.com/git-repo-downloads/repo > /usr/local/bin/repo
 sudo chmod a+x /usr/local/bin/repo
 sudo apt install build-essential wget curl unzip openjdk-8-jdk python git pkg-config meson nasm
@@ -58,7 +62,8 @@ sudo apt install build-essential wget curl unzip openjdk-8-jdk python git pkg-co
 
 Recent enough versions of nasm (≥2.13) and meson (≥0.47) are now required for buildinf ffmpeg/dav1d.
 Nasm can be installed with:
-```
+
+```bash
 wget http://www.nasm.us/pub/nasm/releasebuilds/2.14.02/nasm-2.14.02.tar.bz2
 tar xjvf nasm-2.14.02.tar.bz2
 cd nasm-2.14.02
@@ -67,15 +72,18 @@ PATH="$HOME/bin:$PATH" ./configure
 PATH="$HOME/bin:$PATH" make
 sudo make install
 ```
+
 Latest meson can be installed via:
-```
+
+```bash
 sudo apt install -y pkg-config python3 python3-pip python3-setuptools ninja-build
 sudo pip3 install --upgrade pip
 pip3 install --user meson
 ```
 
 Alternatively you can use the provided docker image to build nova:
-```
+
+```bash
 cd nova/AVP/docker
 docker build -t nova .
 docker run --rm -ti --entrypoint=/bin/bash nova
@@ -104,6 +112,7 @@ Scraping and scrobbling features rely on external services such as **TMDb** (htt
 
 In order to enable NOVA video player to perform these tasks you need to register to this services and enable the API and inject the corresponding keys inside the following files: *MediaLib/src/community/res/values/donottranslate.xml*
 replacing the fake values below:
+
 ```xml
     <?xml version="1.0" encoding="utf-8"?>
     <resources xmlns:android="http://schemas.android.com/apk/res/android">
@@ -140,4 +149,3 @@ If need be, we might in the future introduce some extra bounty programs for spec
 
 [NovaVideoPlayer reddit community](https://www.reddit.com/r/NovaVideoPlayer) community is used as the support community for the Nova Video Player application.
 It is possible to chat with Nova Video Player developers on #novavideoplayer freenode IRC channel (https://webchat.freenode.net).
-
