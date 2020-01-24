@@ -244,7 +244,7 @@ native_avos_full: native_build_native/ffmpeg-android-builder
 	$(call cp_ffmpeg_libs,MediaLib,full)
 	$(call make_avos,MediaLib,full)
 
-native_build_native/ffmpeg-android-builder: native_build_native/dav1d-android-builder native_build_native/mplm-android-builder
+native_build_native/ffmpeg-android-builder:
 	cd native/ffmpeg-android-builder; android_ndk=$(android_ndk) REPO_TOP_DIR=$(REPO_TOP_DIR) bash bootstrap_avp_ffmpeg.sh
 
 native_build_native/torrentd: native_build_native/boost native_build_native/libtorrent
