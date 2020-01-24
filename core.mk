@@ -66,8 +66,6 @@ endif
 REPO_TOP_DIR := $(shell pwd)
 AVOS_DIR := native/avos
 FFMPEG_DIR := native/ffmpeg-android-builder
-DAV1D_DIR := native/dav1d-android-builder
-MPLM_DIR := native/aos-mplm-android-builder
 
 NATIVE_PKG_LIST := \
 	FileCoreLibrary \
@@ -169,26 +167,18 @@ $(foreach PKG,$(NATIVE_LIST),$(eval $(call gen_native_build,$(PKG))))
 define cp_ffmpeg_libs
 	@if [ "$(NDK_CPU_ARM_NEON)" = "1" ];then \
 		mkdir -p $(1)/libs/armeabi-v7a; \
-		cp $(MPLM_DIR)/build-armeabi-v7a/src/libmplm.so $(1)/libs/armeabi-v7a/libmplm.so; \
-		cp $(DAV1D_DIR)/build-armeabi-v7a/src/libdav1d.so $(1)/libs/armeabi-v7a/libdav1d.so; \
 		cp -r $(FFMPEG_DIR)/dist-$(2)-armeabi-v7a/lib/*so $(1)/libs/armeabi-v7a; \
 	fi;
 	@if [ "$(NDK_CPU_X86)" = "1" ];then \
 		mkdir -p $(1)/libs/x86; \
-		cp $(MPLM_DIR)/build-x86/src/libmplm.so $(1)/libs/x86/libmplm.so; \
-		cp $(DAV1D_DIR)/build-x86/src/libdav1d.so $(1)/libs/x86/libdav1d.so; \
 		cp -r $(FFMPEG_DIR)/dist-$(2)-x86/lib/*so $(1)/libs/x86; \
 	fi
 	@if [ "$(NDK_CPU_ARM_64)" = "1" ];then \
 		mkdir -p $(1)/libs/arm64-v8a; \
-		cp $(MPLM_DIR)/build-arm64-v8a/src/libmplm.so $(1)/libs/arm64-v8a/libmplm.so; \
-		cp $(DAV1D_DIR)/build-arm64-v8a/src/libdav1d.so $(1)/libs/arm64-v8a/libdav1d.so; \
 		cp -r $(FFMPEG_DIR)/dist-$(2)-arm64-v8a/lib/*so $(1)/libs/arm64-v8a; \
 	fi
 	@if [ "$(NDK_CPU_X86_64)" = "1" ];then \
 		mkdir -p $(1)/libs/x86_64; \
-		cp $(MPLM_DIR)/build-x86_64/src/libmplm.so $(1)/libs/x86_64/libmplm.so; \
-		cp $(DAV1D_DIR)/build-x86_64/src/libdav1d.so $(1)/libs/x86_64/libdav1d.so; \
 		cp -r $(FFMPEG_DIR)/dist-$(2)-x86_64/lib/*so $(1)/libs/x86_64; \
 	fi
 endef
@@ -240,8 +230,6 @@ native_avos: native_build_native/avos
 clean_prebuilt:
 	rm -rf native/torrentd/libs
 	rm -rf $(FFMPEG_DIR)/dist-*
-	rm -rf $(DAV1D_DIR)/build-*
-	rm -rf $(MPLM_DIR)/build-*
 	rm -rf MediaLib/libs/trakt-java.jar
 	rm -rf FileCoreLibrary/libs/jcifs-ng.jar
 
@@ -258,12 +246,6 @@ native_avos_full: native_build_native/ffmpeg-android-builder
 
 native_build_native/ffmpeg-android-builder: native_build_native/dav1d-android-builder native_build_native/mplm-android-builder
 	cd native/ffmpeg-android-builder; android_ndk=$(android_ndk) REPO_TOP_DIR=$(REPO_TOP_DIR) bash bootstrap_avp_ffmpeg.sh
-
-native_build_native/dav1d-android-builder:
-	cd native/dav1d-android-builder; android_ndk=$(android_ndk) REPO_TOP_DIR=$(REPO_TOP_DIR) bash bootstrap_avp_dav1d.sh
-
-native_build_native/mplm-android-builder:
-	cd native/aos-mplm-android-builder; android_ndk=$(android_ndk) REPO_TOP_DIR=$(REPO_TOP_DIR) bash bootstrap_avp_mplm.sh
 
 native_build_native/torrentd: native_build_native/boost native_build_native/libtorrent
 
