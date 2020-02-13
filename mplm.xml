@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remote name="github" fetch="https://github.com/nova-video-player/" />
-  <remote name="mhi" fetch="." />
+  <remote name="nova" fetch="https://github.com/nova-video-player/" />
+  <remote name="mhi" fetch="https://github.com/magichome/" />
 
-  <default revision="master" remote="github" />
+  <default revision="master" remote="mhi" />
 
+  <!-- LTM Repos -->
   <project path="AVP" name="aos-AVP" revision="nova" >
     <copyfile src="Makefile" dest="Makefile" />
   </project>
@@ -12,14 +13,15 @@
   <project path="Video" name="aos-Video" revision="androidx" />
   <project path="MediaLib" name="aos-MediaLib" revision="v4" />
   <project path="FileCoreLibrary" name="aos-FileCoreLibrary" revision="v4" />
+  <project path="native/ffmpeg-android-builder" name="aos-ffmpeg-android-builder" /> <!-- adds MPLM decoder -->
 
-  <project path="native/avos" name="aos-avos" revision="nova" />
-  <project path="native/audiocompress" name="aos-audiocompress" />
-  <project path="native/ffmpeg-android-builder" name="aos-ffmpeg-android-builder" remote="mhi" /> <!-- adds MPLM decoder -->
-  <project path="native/dav1d-android-builder" name="aos-dav1d-android-builder" revision="v3" />
-  <project path="native/libyuv" name="aos-libyuv" />
-  <project path="native/libnativehelper" name="aos-libnativehelper" />
-  <project path="native/boost" name="aos-boost-android-builder" />
-  <project path="native/libtorrent" name="aos-libtorrent" revision="ndk-r19" />
-  <project path="native/torrentd" name="aos-torrentd" />
+  <!-- NOVA Repos -->
+  <project path="native/avos" name="aos-avos" revision="nova" remote="nova" />
+  <project path="native/audiocompress" name="aos-audiocompress" remote="nova" />
+  <project path="native/dav1d-android-builder" name="aos-dav1d-android-builder" revision="v3" remote="nova" />
+  <project path="native/libyuv" name="aos-libyuv" remote="nova" />
+  <project path="native/libnativehelper" name="aos-libnativehelper" remote="nova" />
+  <project path="native/boost" name="aos-boost-android-builder" remote="nova" />
+  <project path="native/libtorrent" name="aos-libtorrent" revision="ndk-r19" remote="nova" />
+  <project path="native/torrentd" name="aos-torrentd" remote="nova" />
 </manifest>
